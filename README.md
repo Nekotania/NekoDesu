@@ -1,5 +1,11 @@
 # NekoDesu
 
+<img src="Resources/Alice.gif" width="300" height="200" alt="Alice The Mascot Catgirl" class="center">   
+
+### *DISCLAIMER: This is a joke app. A meme. A bamboozling, if you will. It was made to poke fun at procrastination.*
+
+## Actual README:
+
 A macOS menu bar cat that watches you not do the thing, then hands you a rank for it.
 
 Sit in Discord long enough and you become **E-Kitten**. After that, flip **I'm procrastinating** and keep not working. Minutes become points. Points become Stray Cat, Street Cat, Alley Cat, House Cat, and finally The Great Old Cat. Ranks only go up. There is no demotion, because the app already knows how this ends.
