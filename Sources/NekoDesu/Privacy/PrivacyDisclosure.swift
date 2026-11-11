@@ -1,4 +1,4 @@
-/// What each feature observes, in the words the panel shows.
+/// Funny and serious dialogs.
 enum PrivacyDisclosure {
     static let funnyDialog =
         "This program was blessed by the Pope of the Vatican. You know it's legit."
