@@ -29,7 +29,7 @@ final class AppModelTests: XCTestCase {
         let store = FakePersistenceStore()
         let model = AppModel(persistence: store)
 
-        model.update { $0.preferences.discordDaddyMode = true }
+        model.update { $0.preferences.discordDaddyModeCopyEnabled = true }
 
         XCTAssertTrue(model.stored.preferences.discordDaddyModeCopyEnabled)
         XCTAssertEqual(store.saved.count, 1)
