@@ -1,4 +1,4 @@
-/// Funny and serious dialogs.
+/// Funny and serious dialogs. This file is user edited by the project director.
 enum PrivacyDisclosure {
     static let funnyDialog =
         "This program was blessed by the Pope of the Vatican. You know it's legit."

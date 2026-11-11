@@ -115,6 +115,30 @@ final class PersistenceStoreTests: XCTestCase {
         XCTAssertEqual(store.load().diagnostic, .corruptData)
     }
 
+    func testFileWrittenBeforeRichPresenceExistedStillLoads() throws {
+        try writeRaw("""
+        {"schemaVersion": 2, "preferences": {"discordDaddyModeCopyEnabled": true},
+         "catEars": {"rank": "alleyCat", "ritualSeconds": 1200, "procrastinationSeconds": 11000}}
+        """)
+
+        let result = store.load()
+
+        XCTAssertNil(result.diagnostic)
+        XCTAssertEqual(result.state.catEars.rank, .alleyCat)
+        XCTAssertTrue(result.state.preferences.discordDaddyModeCopyEnabled)
+        XCTAssertFalse(result.state.preferences.discordRichPresenceEnabled)
+    }
+
+    func testRichPresencePreferenceRoundTripsAndDefaultsToOff() throws {
+        XCTAssertFalse(StoredAppState.safeDefaults.preferences.discordRichPresenceEnabled)
+        var state = StoredAppState.safeDefaults
+        state.preferences.discordRichPresenceEnabled = true
+
+        try store.save(state)
+
+        XCTAssertTrue(store.load().state.preferences.discordRichPresenceEnabled)
+    }
+
     private func writeRaw(_ contents: String) throws {
         try FileManager.default.createDirectory(
             at: store.fileURL.deletingLastPathComponent(),

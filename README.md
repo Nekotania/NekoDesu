@@ -18,6 +18,7 @@ A pixel catgirl lives in the corner of your screen. She does not help. After a r
 - **Desk cat.** A pixel cat art, bottom-left, crisp pixels, every Space. Click her after a promotion if you want to be congratulated incorrectly.
 - **Clipboard.** She notices you copied something and has an opinion. She keeps the count. She does not keep the text. She will still be disappointed.
 - **Honesty pass.** Point her at the frontmost browser page and she translates "we use cookies to improve your experience" into what it actually means. She looks. She does not click Accept for you. That part is still your problem.
+- **Optional Discord Rich Presence.** You choose whether you want to be seen while using NekoDesu. Usually the answer's "no" and that's the default. But if you toggle it on and say "yes," meaning you DO want Discord Rich Presence, I'd consider you a freaking masochist. Who in their right mind would want that?!
 
 ## What she refuses to do
 

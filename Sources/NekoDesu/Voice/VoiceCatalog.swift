@@ -62,6 +62,19 @@ enum VoiceCatalog {
         static let discordDaddyMode = "Discord Daddy Mode"
     }
 
+    enum RichPresence {
+        static let toggle = "Discord Rich Presence"
+        static let disclosure =
+            "While \"I'm procrastinating\" is on, your rank and a timer are sent to Discord, "
+            + "which shows them on your profile. Nothing else is sent, and nothing at all while this is off."
+        static let missingClientID =
+            "Not set up yet: add NekoDesu's Discord application ID in RichPresenceActivity.swift."
+        static let discordUnavailable = "Discord isn't reachable right now, so nothing is being shown."
+        static let rejected = "Discord refused the status. Check the application ID."
+        /// Second line of the status on the Discord profile.
+        static let procrastinatingState = "Procrastinating"
+    }
+
     enum DeskCat {
         static let missingSprites = "The desk cat's art is missing from the app, so she isn't shown."
     }

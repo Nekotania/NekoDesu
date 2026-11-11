@@ -8,6 +8,7 @@ struct CompositionRoot {
     let ceremony: RankCeremony
     let deskCat: DeskCatController
     let earAnimator: EarAnimator
+    let richPresence: RichPresenceController
     private let notifications: UserNotificationService
 
     static func live() -> CompositionRoot {
@@ -37,12 +38,20 @@ struct CompositionRoot {
         )
         deskCat.latestLine = { [weak catEars] in catEars?.latestLine }
 
+        let clientID = RichPresenceConfiguration.clientID
+        let richPresence = RichPresenceController(
+            appModel: appModel,
+            catEars: catEars,
+            transport: clientID.isEmpty ? nil : DiscordIPCTransport(clientID: clientID)
+        )
+
         return CompositionRoot(
             appModel: appModel,
             catEars: catEars,
             ceremony: ceremony,
             deskCat: deskCat,
             earAnimator: earAnimator,
+            richPresence: richPresence,
             notifications: notifications
         )
     }
@@ -52,9 +61,11 @@ struct CompositionRoot {
         notifications.activate()
         deskCat.show()
         catEars.start()
+        richPresence.start()
     }
 
     func stop() {
+        richPresence.stop()
         catEars.stop()
         deskCat.hide()
     }

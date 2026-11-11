@@ -13,6 +13,19 @@ struct StoredAppState: Codable, Equatable {
 
     struct Preferences: Codable, Equatable {
         var discordDaddyModeCopyEnabled = false
+        /// Opt-in: nothing is sent to Discord while this is false.
+        var discordRichPresenceEnabled = false
+
+        init() {}
+
+        // Preferences added after a schema version shipped are optional on
+        // disk, so older files keep loading with the default.
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            discordDaddyModeCopyEnabled = try container.decode(Bool.self, forKey: .discordDaddyModeCopyEnabled)
+            discordRichPresenceEnabled =
+                try container.decodeIfPresent(Bool.self, forKey: .discordRichPresenceEnabled) ?? false
+        }
     }
 
     struct CatEars: Codable, Equatable {

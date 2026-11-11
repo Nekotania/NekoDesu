@@ -56,6 +56,9 @@ this project.
 ### Network and data
 
 - The application must not make network requests.
+- The one exception to local-only is opt-in Discord Rich Presence
+(section 5.7): the app hands a status to the Discord app on the same
+Mac over Discord's local socket, and Discord shows it to other people.
 - No account, backend, analytics, telemetry, remote configuration, or
 sync.
 - Clipboard content must never be uploaded or persisted.
@@ -106,6 +109,11 @@ Sources/NekoDesu/
     RankProgression.swift
     RankCeremony.swift
     CertificateGenerator.swift
+  RichPresence/
+    RichPresenceController.swift
+    RichPresenceActivity.swift
+    DiscordIPC.swift
+    DiscordIPCTransport.swift
   DeskCat/
     DeskCatController.swift
     DeskCatWindow.swift
@@ -391,6 +399,26 @@ line:
 
 Do not write additional jokes about bodies or gender. The panel
 describes the ceremony as a fake internet ritual.
+
+### 5.7 Discord Rich Presence
+
+An opt-in way to show procrastination on the user's Discord profile.
+
+- Off by default. While off, nothing is sent to Discord.
+- Shown only while the procrastination toggle is on. Turning the toggle
+off, turning the setting off, or quitting clears it.
+- Shows exactly: the current rank name, the word "Procrastinating", and
+the time the toggle was turned on. Nothing else is sent.
+- Talks only to the Discord app on the same Mac through its local IPC
+socket. NekoDesu still opens no network connection of its own.
+- Needs the Application ID of a Discord application, kept in one place
+(`RichPresenceConfiguration`). With no ID the feature is inert and the
+panel says so.
+- The panel states plainly what is sent and that other people see it.
+- Discord not running or refusing the status is reported in the panel
+and never affects the meter.
+- Sending a status is unrelated to the ritual clock, which only observes
+Discord and stops after E-Kitten.
 
 ## 6. Desk cat
 
@@ -809,14 +837,15 @@ A feature is done when:
 
 - A second app, a multi-app monorepo, or a standalone browser
 extension.
-- Accounts, backend services, analytics, telemetry, sync, or uploads.
+- Accounts, backend services, analytics, telemetry, sync, or uploads
+(other than the opt-in Rich Presence status in section 5.7).
 - Reading Discord messages, servers, or conversations.
 - Recording or analyzing microphone audio.
 - Demoting ranks, streaks, shame dialogs, or a phone companion.
 - Clicking through cookie banners or signup walls.
 - Automatically submitting forms or accepting terms.
 - Replacing the user's pixel art with generated or restyled assets.
-- Replacing funny lines written by the project director.
+- Replacing funny lines written by the project director. They are specifically written in the files as "files written/edited by the Project Director."
 
 ## 17. Later ideas (not current commitments)
 

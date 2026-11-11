@@ -11,6 +11,7 @@ struct NekoDesuApp: App {
                 model: appDelegate.composition.appModel,
                 catEars: appDelegate.composition.catEars,
                 ceremony: appDelegate.composition.ceremony,
+                richPresence: appDelegate.composition.richPresence,
                 deskCatHasSprites: appDelegate.composition.deskCat.hasSprites
             )
         } label: {

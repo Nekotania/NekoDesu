@@ -6,6 +6,7 @@ struct MenuBarView: View {
     @ObservedObject var model: AppModel
     @ObservedObject var catEars: CatEarsModel
     @ObservedObject var ceremony: RankCeremony
+    @ObservedObject var richPresence: RichPresenceController
     let deskCatHasSprites: Bool
 
     var body: some View {
@@ -34,6 +35,8 @@ struct MenuBarView: View {
                 get: { model.stored.preferences.discordDaddyModeCopyEnabled },
                 set: { catEars.setDiscordDaddyModeEnabled($0) }
             ))
+
+            richPresenceRow
 
             Button(VoiceCatalog.Panel.quit) {
                 NSApplication.shared.terminate(nil)
@@ -72,6 +75,22 @@ struct MenuBarView: View {
             }
         case .denied:
             note(VoiceCatalog.Notifications.denied)
+        }
+    }
+
+    @ViewBuilder
+    private var richPresenceRow: some View {
+        Toggle(VoiceCatalog.RichPresence.toggle, isOn: Binding(
+            get: { model.stored.preferences.discordRichPresenceEnabled },
+            set: { richPresence.setEnabled($0) }
+        ))
+        note(VoiceCatalog.RichPresence.disclosure)
+        if !richPresence.isConfigured {
+            note(VoiceCatalog.RichPresence.missingClientID)
+        } else if richPresence.lastDelivery == .discordUnavailable {
+            note(VoiceCatalog.RichPresence.discordUnavailable)
+        } else if richPresence.lastDelivery == .rejected {
+            note(VoiceCatalog.RichPresence.rejected)
         }
     }
 

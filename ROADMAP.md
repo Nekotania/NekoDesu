@@ -176,6 +176,33 @@ criteria.
 
 ------------------------------------------------------------------------
 
+## Phase 1.7 --- Discord Rich Presence
+
+**Goal:** Optionally show rank and a timer on the user's Discord profile
+while the procrastination toggle is on.
+
+### Tasks
+
+-   [x] Record the exception to local-only in `AGENTS.md` (section 5.7).
+-   [x] Add an opt-in panel toggle, off by default, with a disclosure.
+-   [x] Show rank, "Procrastinating", and elapsed time only while the
+    toggle is on; clear otherwise.
+-   [x] Talk to Discord over its local IPC socket; no network code.
+-   [x] Report Discord unreachable or refusing without affecting the
+    meter.
+-   [?] Create the Discord application and set its ID in
+    `RichPresenceConfiguration` (decision D-13).
+
+### Acceptance criteria
+
+-   [x] Nothing is sent while the setting is off.
+-   [x] The local socket handshake reaches a running Discord.
+-   [ ] With a real application ID, the status appears on the profile
+    while procrastinating and disappears when the toggle goes off.
+-   [ ] The panel toggle and its notes render correctly.
+
+------------------------------------------------------------------------
+
 ## Phase 2 --- Passive-aggressive clipboard
 
 **Goal:** React to copy events without keeping the copied content.
@@ -320,7 +347,8 @@ tone.
 
 -   A second app, a multi-app monorepo, or a standalone browser
     extension.
--   Accounts, a backend, analytics, telemetry, sync, or uploads.
+-   Accounts, a backend, analytics, telemetry, sync, or uploads
+    (other than the opt-in Rich Presence status).
 -   Reading Discord messages, servers, or conversations.
 -   Recording or analyzing microphone audio.
 -   Demoting ranks, streaks, shame dialogs, or a phone companion.
@@ -395,6 +423,11 @@ turn guesses into product requirements.
   D-12              Menu bar icon art      No icon art supplied.   Open
                                            Drawn in code: ears grow
                                            with rank.              
+
+  D-13              Discord application ID No ID yet, so Rich      Open
+                    for Rich Presence      Presence is inert. The  
+                                           application's name is   
+                                           what Discord displays.  
   ----------------------------------------------------------------------------------
 
 ## Change management
