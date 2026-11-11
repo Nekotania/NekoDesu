@@ -1,6 +1,6 @@
 # NekoDesu
 
-<img src="Resources/Alice.gif" width="300" height="300" alt="Alice The Mascot Catgirl"">   
+<img src="Resources/Alice.gif" width="300" height="300" alt="Alice The Mascot Catgirl">   
 
 ### *DISCLAIMER: This is a joke app. A meme. A bamboozling, if you will. It was made to poke fun at procrastination.*
 
