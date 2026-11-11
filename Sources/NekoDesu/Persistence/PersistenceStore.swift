@@ -20,6 +20,15 @@ protocol PersistenceStore {
     func save(_ state: StoredAppState) throws
 }
 
+enum AppDirectories {
+    /// `~/Library/Application Support/NekoDesu`
+    static func applicationSupport(fileManager: FileManager = .default) -> URL {
+        let base = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+            ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support")
+        return base.appendingPathComponent("NekoDesu", isDirectory: true)
+    }
+}
+
 /// Stores state as one JSON file, written atomically.
 struct FilePersistenceStore: PersistenceStore {
     let fileURL: URL
@@ -32,11 +41,7 @@ struct FilePersistenceStore: PersistenceStore {
 
     /// `~/Library/Application Support/NekoDesu/state.json`
     static func defaultFileURL(fileManager: FileManager = .default) -> URL {
-        let applicationSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-            ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support")
-        return applicationSupport
-            .appendingPathComponent("NekoDesu", isDirectory: true)
-            .appendingPathComponent("state.json")
+        AppDirectories.applicationSupport(fileManager: fileManager).appendingPathComponent("state.json")
     }
 
     func load() -> PersistenceLoadResult {
@@ -74,13 +79,17 @@ struct FilePersistenceStore: PersistenceStore {
             return PersistenceLoadResult(state: .safeDefaults, diagnostic: .corruptData)
         }
 
-        // Migrations from older schema versions are added as cases here.
         switch envelope.schemaVersion {
         case StoredAppState.currentSchemaVersion:
-            guard let state = try? decoder.decode(StoredAppState.self, from: data) else {
+            guard let state = try? decoder.decode(StoredAppState.self, from: data), state.isPlausible else {
                 return PersistenceLoadResult(state: .safeDefaults, diagnostic: .corruptData)
             }
             return PersistenceLoadResult(state: state, diagnostic: nil)
+        case 1:
+            guard let old = try? decoder.decode(StoredAppStateV1.self, from: data) else {
+                return PersistenceLoadResult(state: .safeDefaults, diagnostic: .corruptData)
+            }
+            return PersistenceLoadResult(state: old.migrated, diagnostic: nil)
         default:
             return PersistenceLoadResult(
                 state: .safeDefaults,

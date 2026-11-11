@@ -54,7 +54,7 @@ final class PersistenceStoreTests: XCTestCase {
     }
 
     func testCurrentVersionWithWrongShapeFallsBackToDefaults() throws {
-        try writeRaw(#"{"schemaVersion": 1, "preferences": "yes"}"#)
+        try writeRaw(#"{"schemaVersion": 2, "preferences": "yes"}"#)
 
         let result = store.load()
 
@@ -69,6 +69,50 @@ final class PersistenceStoreTests: XCTestCase {
 
         XCTAssertEqual(result.state, .safeDefaults)
         XCTAssertEqual(result.diagnostic, .unsupportedSchemaVersion(999))
+    }
+
+    func testCatEarsProgressRoundTrips() throws {
+        var state = StoredAppState.safeDefaults
+        state.catEars.rank = .streetCat
+        state.catEars.ritualSeconds = 1_200
+        state.catEars.procrastinationSeconds = 5_432.5
+        state.catEars.ceremonyLineID = "paperwork-finalized"
+
+        try store.save(state)
+
+        XCTAssertEqual(store.load().state, state)
+    }
+
+    func testVersionOneFileMigratesKeepingPreferences() throws {
+        try writeRaw(#"{"schemaVersion": 1, "preferences": {"discordDaddyModeCopyEnabled": true}}"#)
+
+        let result = store.load()
+
+        XCTAssertNil(result.diagnostic)
+        XCTAssertTrue(result.state.preferences.discordDaddyModeCopyEnabled)
+        XCTAssertEqual(result.state.catEars, StoredAppState.CatEars())
+        XCTAssertEqual(result.state.schemaVersion, StoredAppState.currentSchemaVersion)
+    }
+
+    func testImplausibleProgressFallsBackToDefaults() throws {
+        try writeRaw("""
+        {"schemaVersion": 2, "preferences": {"discordDaddyModeCopyEnabled": false},
+         "catEars": {"ritualSeconds": -5, "procrastinationSeconds": 10}}
+        """)
+
+        let result = store.load()
+
+        XCTAssertEqual(result.state, .safeDefaults)
+        XCTAssertEqual(result.diagnostic, .corruptData)
+    }
+
+    func testUnknownRankFallsBackToDefaults() throws {
+        try writeRaw("""
+        {"schemaVersion": 2, "preferences": {"discordDaddyModeCopyEnabled": false},
+         "catEars": {"rank": "emperorCat", "ritualSeconds": 0, "procrastinationSeconds": 0}}
+        """)
+
+        XCTAssertEqual(store.load().diagnostic, .corruptData)
     }
 
     private func writeRaw(_ contents: String) throws {

@@ -78,96 +78,96 @@ procrastination toggle earns later ranks.
 
 ### 1.1 Rank model and progression
 
--   [ ] Define the six ranks in one ordered rank table.
--   [ ] Store the thresholds after E-Kitten in that table: 30, 90, 180,
+-   [x] Define the six ranks in one ordered rank table.
+-   [x] Store the thresholds after E-Kitten in that table: 30, 90, 180,
     360, and 720 minutes.
--   [ ] Implement pure functions for rank lookup and
+-   [x] Implement pure functions for rank lookup and
     progress-to-next-rank.
--   [ ] Implement maximum-rank behavior.
--   [ ] Ensure rank progression is monotonic and cannot demote.
--   [ ] Add unit tests for every threshold and boundary.
+-   [x] Implement maximum-rank behavior.
+-   [x] Ensure rank progression is monotonic and cannot demote.
+-   [x] Add unit tests for every threshold and boundary.
 
 ### 1.2 Procrastination toggle
 
--   [ ] Add the "I'm procrastinating" toggle to the panel.
--   [ ] Award one point per minute while enabled.
--   [ ] Account for elapsed duration rather than assuming timer
+-   [x] Add the "I'm procrastinating" toggle to the panel.
+-   [x] Award one point per minute while enabled.
+-   [x] Account for elapsed duration rather than assuming timer
     callbacks are punctual.
--   [ ] Stop accumulation immediately when the toggle is turned off.
--   [ ] Restore accumulated progress after relaunch.
--   [ ] Show current rank and progress toward the next rank.
--   [ ] Do not enable the toggle automatically on launch.
+-   [x] Stop accumulation immediately when the toggle is turned off.
+-   [x] Restore accumulated progress after relaunch.
+-   [x] Show current rank and progress toward the next rank.
+-   [x] Do not enable the toggle automatically on launch.
 
 ### 1.3 Discord ritual clock
 
--   [ ] Detect Discord using `NSWorkspace` and `com.hnc.discord`.
--   [ ] Distinguish visible Discord from running-without-visible-window.
--   [ ] Query audio-device running state without opening an audio
+-   [x] Detect Discord using `NSWorkspace` and `com.hnc.discord`.
+-   [x] Distinguish visible Discord from running-without-visible-window.
+-   [x] Query audio-device running state without opening an audio
     capture stream.
--   [ ] Implement full-rate, quarter-rate, and paused accounting.
--   [ ] Keep the minimized/background multiplier configurable until its
+-   [x] Implement full-rate, quarter-rate, and paused accounting.
+-   [x] Keep the minimized/background multiplier configurable until its
     value is decided.
--   [ ] Handle unknown audio-device state without claiming a call was
+-   [x] Handle unknown audio-device state without claiming a call was
     detected.
--   [ ] Add tests for state transitions, delayed updates, and long
+-   [x] Add tests for state transitions, delayed updates, and long
     suspension.
--   [ ] Add the Discord privacy explanation to the panel.
+-   [x] Add the Discord privacy explanation to the panel.
 
 ### 1.4 E-Kitten ceremony
 
--   [ ] Trigger the ceremony once when the ritual threshold is reached.
--   [ ] Change the menu bar icon.
--   [ ] Play the short ear animation.
--   [ ] Send a local notification.
--   [ ] Select ceremony copy from `Voice/`.
--   [ ] Generate the certificate in Application Support.
--   [ ] Add a panel action to reveal the certificate in Finder.
--   [ ] Make ceremony execution idempotent across repeated updates and
+-   [x] Trigger the ceremony once when the ritual threshold is reached.
+-   [x] Change the menu bar icon.
+-   [x] Play the short ear animation.
+-   [-] Send a local notification.
+-   [x] Select ceremony copy from `Voice/`.
+-   [x] Generate the certificate in Application Support.
+-   [x] Add a panel action to reveal the certificate in Finder.
+-   [x] Make ceremony execution idempotent across repeated updates and
     relaunches.
--   [ ] Ensure notification or certificate failure does not undo the
+-   [x] Ensure notification or certificate failure does not undo the
     earned rank.
 
 ### 1.5 Desk cat
 
--   [ ] Load the user's frames from `Resources/Catgirl/`.
--   [ ] Support the agreed PNG-sequence or sprite-sheet format.
--   [ ] Render at integer scale with nearest-neighbor filtering.
--   [ ] Loop idle animation from first launch.
--   [ ] Support a talk cycle if one is supplied.
--   [ ] Position the window at the bottom-left of the primary display.
--   [ ] Account for Dock placement and display-frame changes.
--   [ ] Implement transparent-pixel hit testing.
--   [ ] Ensure the window is borderless, transparent, non-activating,
+-   [x] Load the user's frames from `Resources/Catgirl/`.
+-   [x] Support the agreed PNG-sequence or sprite-sheet format.
+-   [x] Render at integer scale with nearest-neighbor filtering.
+-   [x] Loop idle animation from first launch.
+-   [x] Support a talk cycle if one is supplied.
+-   [x] Position the window at the bottom-left of the primary display.
+-   [x] Account for Dock placement and display-frame changes.
+-   [-] Implement transparent-pixel hit testing.
+-   [x] Ensure the window is borderless, transparent, non-activating,
     and joins every Space.
--   [ ] Add rank-up click arming and speech bubble behavior.
--   [ ] Ensure pre-achievement clicks do nothing.
--   [ ] Ensure clipboard and honesty events never arm the cat.
--   [ ] Gate Discord Daddy Mode speech with the same setting as Discord Daddy Mode notifications.
+-   [-] Add rank-up click arming and speech bubble behavior.
+-   [x] Ensure pre-achievement clicks do nothing.
+-   [x] Ensure clipboard and honesty events never arm the cat.
+-   [x] Gate Discord Daddy Mode speech with the same setting as Discord Daddy Mode notifications.
 
 ### 1.6 Rank-up feedback
 
--   [ ] Add later-rank notifications.
--   [ ] Change the menu bar icon as ranks increase.
--   [ ] Play the short ear animation.
--   [ ] Arm the matching desk-cat line.
--   [ ] Verify a rank-up is announced once, not on every launch.
+-   [-] Add later-rank notifications.
+-   [x] Change the menu bar icon as ranks increase.
+-   [x] Play the short ear animation.
+-   [x] Arm the matching desk-cat line.
+-   [x] Verify a rank-up is announced once, not on every launch.
 
 ### Phase 1 acceptance criteria
 
--   [ ] A Discord session can earn E-Kitten using the specified rates.
--   [ ] Discord quitting pauses the ritual clock.
--   [ ] Discord running without a visible window uses the configured
+-   [x] A Discord session can earn E-Kitten using the specified rates.
+-   [x] Discord quitting pauses the ritual clock.
+-   [x] Discord running without a visible window uses the configured
     minimized/background behavior.
 -   [ ] The panel shows rank, progress, and the procrastination toggle.
 -   [ ] Toggle minutes can progress from E-Kitten toward Stray Cat and
     beyond.
--   [ ] The E-Kitten ceremony runs once and creates a certificate.
+-   [x] The E-Kitten ceremony runs once and creates a certificate.
 -   [ ] The certificate can be revealed in Finder.
--   [ ] The user's catgirl art appears crisp at the bottom-left from
+-   [x] The user's catgirl art appears crisp at the bottom-left from
     launch.
 -   [ ] Clicking after a rank-up displays the correct line.
 -   [ ] The panel explains what the ritual detects.
--   [ ] No network access, additional target, or extension was
+-   [x] No network access, additional target, or extension was
     introduced.
 
 **Stop condition:** The core meter, ceremony, certificate, and desk cat
@@ -339,7 +339,8 @@ turn guesses into product requirements.
   ----------------- ---------------------- ----------------------- -----------------
   D-01              Minimized/background   "Slower" is specified,  Open
                     Discord multiplier     but no exact rate is    
-                                           given.                  
+                                           given. Placeholder 0.5× 
+                                           in `RitualConfiguration`.
 
   D-02              Discord call detection Current audio-device    Open
                     accuracy               signal may be caused by 
@@ -367,11 +368,33 @@ turn guesses into product requirements.
                                            confirmed during        
                                            implementation.         
 
-  D-07              Sprite asset format    PNG sequence or sprite  Open
-                                           sheet are both          
-                                           acceptable; choose the  
-                                           actual supplied format  
-                                           when assets are added.  
+  D-07              Sprite asset format    Supplied art is an      Open
+                                           animated GIF            
+                                           (`Catgirl/Alice.gif`),  
+                                           loaded as-is. `AGENTS.md`
+                                           still says PNG sequence 
+                                           or sprite sheet.        
+
+  D-08              Background Discord     Unspecified. The slower Open
+                    while in a call        of the two rates applies.
+
+  D-09              Flavor titles          "Professional Nagger"   Open
+                                           and "Archduke of Later" 
+                                           are not shown: no rank  
+                                           is assigned to them.    
+
+  D-10              Desk-cat display size  Unspecified. Placeholder Open
+                    and window level       2 pt per art pixel      
+                                           (128 pt), floating above
+                                           normal windows.         
+
+  D-11              Toggle before E-Kitten Locked until E-Kitten,  Open
+                                           following the README    
+                                           ("After that, flip...").
+
+  D-12              Menu bar icon art      No icon art supplied.   Open
+                                           Drawn in code: ears grow
+                                           with rank.              
   ----------------------------------------------------------------------------------
 
 ## Change management

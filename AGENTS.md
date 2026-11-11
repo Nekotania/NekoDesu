@@ -281,7 +281,7 @@ Discord is not running.
 
 Discord detection:
 
-- Use `NSWorkspace` and bundle identifier `com.hnc.discord`.
+- Use `NSWorkspace` and bundle identifier `com.hnc.Discord`.
 - A visible Discord window is treated as open/visible.
 - Discord running without a visible window is treated as
 minimized/background for the purpose of the current design.
@@ -816,6 +816,7 @@ extension.
 - Clicking through cookie banners or signup walls.
 - Automatically submitting forms or accepting terms.
 - Replacing the user's pixel art with generated or restyled assets.
+- Replacing funny lines written by the project director.
 
 ## 17. Later ideas (not current commitments)
 

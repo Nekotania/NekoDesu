@@ -4,17 +4,58 @@ import AppKit
 @MainActor
 struct CompositionRoot {
     let appModel: AppModel
+    let catEars: CatEarsModel
+    let ceremony: RankCeremony
     let deskCat: DeskCatController
+    let earAnimator: EarAnimator
+    private let notifications: UserNotificationService
 
     static func live() -> CompositionRoot {
-        let persistence = FilePersistenceStore(fileURL: FilePersistenceStore.defaultFileURL())
-        return CompositionRoot(
-            appModel: AppModel(persistence: persistence),
-            deskCat: DeskCatController(primaryVisibleFrame: {
+        let appModel = AppModel(
+            persistence: FilePersistenceStore(fileURL: FilePersistenceStore.defaultFileURL())
+        )
+        let earAnimator = EarAnimator()
+        let notifications = UserNotificationService()
+        let deskCat = DeskCatController(
+            sprites: DeskCatConfiguration().loadSprites(),
+            primaryVisibleFrame: {
                 // `screens.first` is the display with the menu bar; `NSScreen.main`
                 // would follow whichever screen has keyboard focus.
                 NSScreen.screens.first?.visibleFrame
-            })
+            }
         )
+        let ceremony = RankCeremony(
+            notifications: notifications,
+            certificates: FileCertificateStore(fileURL: FileCertificateStore.defaultFileURL()),
+            playEarAnimation: { earAnimator.play() },
+            armDeskCat: { deskCat.arm() }
+        )
+        let catEars = CatEarsModel(
+            appModel: appModel,
+            discord: DiscordActivityMonitor(),
+            onRankUp: { ceremony.perform($0) }
+        )
+        deskCat.latestLine = { [weak catEars] in catEars?.latestLine }
+
+        return CompositionRoot(
+            appModel: appModel,
+            catEars: catEars,
+            ceremony: ceremony,
+            deskCat: deskCat,
+            earAnimator: earAnimator,
+            notifications: notifications
+        )
+    }
+
+    /// Starts everything that observes the system or shows on screen.
+    func start() {
+        notifications.activate()
+        deskCat.show()
+        catEars.start()
+    }
+
+    func stop() {
+        catEars.stop()
+        deskCat.hide()
     }
 }

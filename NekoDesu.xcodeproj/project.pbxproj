@@ -27,6 +27,11 @@
 			path = Sources/NekoDesu;
 			sourceTree = "<group>";
 		};
+		AA0000000000000000000006 /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		AA0000000000000000000005 /* Tests/NekoDesuTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Tests/NekoDesuTests;
@@ -56,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0000000000000000000004 /* Sources/NekoDesu */,
+				AA0000000000000000000006 /* Resources */,
 				AA0000000000000000000005 /* Tests/NekoDesuTests */,
 				AA0000000000000000000003 /* Products */,
 			);
@@ -87,6 +93,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				AA0000000000000000000004 /* Sources/NekoDesu */,
+				AA0000000000000000000006 /* Resources */,
 			);
 			name = NekoDesu;
 			productName = NekoDesu;

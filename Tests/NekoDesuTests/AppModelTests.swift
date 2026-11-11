@@ -56,20 +56,3 @@ final class AppModelTests: XCTestCase {
         XCTAssertEqual(model.persistenceDiagnostic, .saveFailed)
     }
 }
-
-private final class FakePersistenceStore: PersistenceStore {
-    var loadResult: PersistenceLoadResult
-    var saveError: Error?
-    private(set) var saved: [StoredAppState] = []
-
-    init(loadResult: PersistenceLoadResult = PersistenceLoadResult(state: .safeDefaults, diagnostic: nil)) {
-        self.loadResult = loadResult
-    }
-
-    func load() -> PersistenceLoadResult { loadResult }
-
-    func save(_ state: StoredAppState) throws {
-        if let saveError { throw saveError }
-        saved.append(state)
-    }
-}
